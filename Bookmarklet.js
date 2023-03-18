@@ -1,1 +1,19 @@
-javascript:(function()%7Basync function fetch_demo()%0A%7B%0A%09const resp %3D await fetch('https%3A%2F%2Fapi.dictionaryapi.dev%2Fapi%2Fv2%2Fentries%2Fen%2Fdog')%3B%0A%0A%09console.log(await resp.json())%3B%0A%7D%0A%0Afetch_demo()%3B%7D)()%3B
+javascript:(function() {
+  var word = prompt("Enter a word:");
+  if (word) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://www.dictionaryapi.com/api/v3/references/collegiate/json/" + word + "?key=dac24cc9-c335-4327-9e61-6240c2a5a349", true);
+    xhr.onload = function() {
+      if (xhr.readyState === xhr.DONE) {
+        if (xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText);
+          var definition = response[0].shortdef[0];
+          alert(definition);
+        } else {
+          alert('Error: ' + xhr.status);
+        }
+      }
+    };
+    xhr.send(null);
+  }
+})();
