@@ -5,13 +5,16 @@ javascript:(function() {
     request.onreadystatechange = function() {
       if (request.readyState === 4 && request.status === 200) {
         var response = request.responseText;
-        var parser = new DOMParser();
-        var htmlDoc = parser.parseFromString(response, "text/html");
-        var definition = htmlDoc.querySelector('.one-click-content .e1q3nk1v3').textContent;
-        alert(definition);
+        var match = response.match(/<meta name="description" content="(.*?) See more\." \/>/);
+        if (match !== null) {
+          var definition = match[1];
+          alert(definition);
+        } else {
+          alert("Definition not found.");
+        }
       }
     };
-    request.open("GET", "https://crossorigin.me/https://www.dictionary.com/browse/" + word);
+    request.open("GET", "https://cors-proxy.htmldriven.com/?url=https://www.dictionary.com/browse/" + word);
     request.send();
   }
 })();
