@@ -5,7 +5,9 @@ javascript:(function() {
     request.onreadystatechange = function() {
       if (request.readyState === 4 && request.status === 200) {
         var response = request.responseText;
-        var definition = response.match(/<meta name="description" content="(.*?)"\/>/)[1];
+        var parser = new DOMParser();
+        var htmlDoc = parser.parseFromString(response, "text/html");
+        var definition = htmlDoc.querySelector('.one-click-content .e1q3nk1v3').textContent;
         alert(definition);
       }
     };
